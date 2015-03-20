@@ -74,7 +74,11 @@ angular.module('mgcrea.ngStrap.typeahead', ['mgcrea.ngStrap.tooltip', 'mgcrea.ng
         $typeahead.select = function(index) {
           var value = scope.$matches[index].value;
           // console.log('$setViewValue', value);
+          var origViewVal = controller.$viewValue;
           controller.$setViewValue(value);
+          controller.$viewValue = undefined;
+          controller.$render();
+          controller.$viewValue = origViewVal;
           controller.$render();
           scope.$resetMatches();
           if(parentScope) parentScope.$digest();
